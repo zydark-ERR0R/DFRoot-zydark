@@ -9,9 +9,9 @@
 #include <unistd.h>
 
 #define BLKROSET   0x125d
-#define KSUD_STAGE "/data/user_de/0/df.root/ksud"
+#define KSUD_STAGE "/data/user_de/0/com.zydark.dfroot/ksud"
 #define KSUD       "/data/adb/ksud"
-#define PREFS_PATH "/data/user_de/0/df.root/shared_prefs/dfroot.xml"
+#define PREFS_PATH "/data/user_de/0/com.zydark.dfroot/shared_prefs/zydark.xml"
 #define MODULES_DIR "/data/adb/modules"
 
 static int pref_true(const char *buf, const char *key)
@@ -173,8 +173,6 @@ static void touch(const char *path)
         close(fd);
 }
 
-/* Mark every installed module disabled before ksud runs. A broken module
- * otherwise loads on the next boot and bootloops the device. */
 static int disable_modules(void)
 {
     DIR *dir = opendir(MODULES_DIR);
