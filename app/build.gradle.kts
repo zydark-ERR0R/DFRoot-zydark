@@ -6,10 +6,12 @@ plugins {
 
 val signingProps = Properties()
 val signingPropsFile = rootProject.file("signing.properties")
-if (signingPropsFile.exists()) signingProps.load(signingPropsFile.inputStream())
+if (signingPropsFile.exists()) {
+    signingProps.load(signingPropsFile.inputStream())
+}
 
 android {
-    namespace = "df.root"
+    namespace = "com.zydark.dfroot"
     compileSdk = 37
 
     buildFeatures {
@@ -17,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "df.root"
+        applicationId = "com.zydark.dfroot"
         minSdk = 32
         targetSdk = 37
         versionCode = 407
@@ -29,11 +31,13 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            storeFile = file(signingProps.getProperty("KEYSTORE_FILE"))
-            storePassword = signingProps.getProperty("KEYSTORE_PASSWORD")
-            keyAlias = signingProps.getProperty("KEY_ALIAS")
-            keyPassword = signingProps.getProperty("KEY_PASSWORD")
+        if (signingPropsFile.exists()) {
+            create("release") {
+                storeFile = file(signingProps.getProperty("KEYSTORE_FILE"))
+                storePassword = signingProps.getProperty("KEYSTORE_PASSWORD")
+                keyAlias = signingProps.getProperty("KEY_ALIAS")
+                keyPassword = signingProps.getProperty("KEY_PASSWORD")
+            }
         }
     }
 
@@ -43,7 +47,11 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
         release {
-            signingConfig = signingConfigs.getByName("release")
+            // If signing.properties exists, use release signing; otherwise fall back to debug signing
+            signingConfig = if (signingPropsFile.exists())
+                signingConfigs.getByName("release")
+            else
+                signingConfigs.getByName("debug")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -75,7 +83,7 @@ android {
 androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
-            output.outputFileName.set(output.versionName.map { vn -> "DFRoot_${vn}.apk" })
+            output.outputFileName.set(output.versionName.map { vn -> "ZYDARK_DFRoot_${vn}.apk" })
         }
     }
 }
