@@ -1,4 +1,4 @@
-package df.root;
+package com.zydark.dfroot;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.util.Log;
 import java.io.File;
 
 public class BootReceiver extends BroadcastReceiver implements IReporter {
-    private static final String TAG = "dfroot";
+    private static final String TAG = "zydark";
 
     @Override
     public void report(String msg) {
@@ -25,7 +25,7 @@ public class BootReceiver extends BroadcastReceiver implements IReporter {
         Log.i(TAG, "boot: " + intent.getAction());
         final Context deCtx = context.createDeviceProtectedStorageContext();
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "dfroot:boot");
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "zydark:boot");
         wl.acquire();
         new Thread(() -> {
             try {
@@ -36,6 +36,6 @@ public class BootReceiver extends BroadcastReceiver implements IReporter {
             } finally {
                 wl.release();
             }
-        }, "dfroot-boot").start();
+        }, "zydark-boot").start();
     }
 }
