@@ -1,4 +1,4 @@
-package df.root;
+package com.zydark.dfroot;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,7 +33,7 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends Activity implements IReporter {
 
-    private static final String TAG = "dfroot";
+    private static final String TAG = "zydark";
 
     private Button btnRun;
     private ScrollView outputScroll;
@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements IReporter {
         mDeCtx = createDeviceProtectedStorageContext();
         setContentView(R.layout.activity_main);
 
-        getActionBar().setSubtitle("@diabl0w github/xda");
+        getActionBar().setSubtitle("ZYDARK ERROR");
 
         btnRun = findViewById(R.id.btnRun);
         outputScroll = findViewById(R.id.outputScroll);
@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements IReporter {
                 break;
             }
         }
-        if (!savedFound && saved != null) { // Saved manager was uninstalled
+        if (!savedFound && saved != null) {
             prefs.edit().remove(ExploitRunner.PREF_SU_MANAGER).apply();
         }
 
@@ -137,10 +137,10 @@ public class MainActivity extends Activity implements IReporter {
     private void runExploit() {
         try {
             int rc = ExploitRunner.run(mDeCtx, this);
-            String msg = rc == 0 ? "DFRoot: SUCCESS"
-                       : rc == 1 ? "DFRoot: Error - ksud nonzero exit"
-                       : rc == 2 ? "DFRoot: Error - check logcat & dmesg"
-                       : "DFRoot: Error - failed to patch files";
+            String msg = rc == 0 ? "ZYDARK DFRoot: SUCCESS"
+                       : rc == 1 ? "ZYDARK DFRoot: Error - ksud nonzero exit"
+                       : rc == 2 ? "ZYDARK DFRoot: Error - check logcat & dmesg"
+                       : "ZYDARK DFRoot: Error - failed to patch files";
             mMain.post(() -> Toast.makeText(this, msg, Toast.LENGTH_LONG).show());
         } catch (Exception e) {
             Log.e(TAG, "exploit exception", e);
